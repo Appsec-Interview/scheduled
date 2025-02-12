@@ -2,7 +2,7 @@ name: Revoke Student Access
 
 on:
   schedule:
-    - cron: "*/5 * * * *"  # Runs every 5th minute
+    - cron: "*/5 * * * *"  # Runs every 5 minutes
   workflow_dispatch:
 
 jobs:
@@ -12,12 +12,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Remove students after 15 minutes
+      - name: Remove students after 2 hours
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           ORG_NAME: "Appsec-Interview"
         run: |
-          repos=$(gh repo list "$ORG_NAME" --json name,createdAt --jq '.[] | select((now - (.createdAt | fromdateiso8601)) > 900) | .name')
+          repos=$(gh repo list "$ORG_NAME" --json name,createdAt --jq '.[] | select((now - (.createdAt | fromdateiso8601)) > 7200) | .name')
 
           for repo in $repos; do
             echo "Processing $repo"
