@@ -3,6 +3,7 @@ name: Revoke Student Access
 on:
   schedule:
     - cron: "*/5 * * * *"  # Runs every 5th minute
+  workflow_dispatch:
 
 jobs:
   revoke_access:
@@ -11,7 +12,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Remove students after 20 minutes
+      - name: Remove students after 15 minutes
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           ORG_NAME: "your-org-name"
